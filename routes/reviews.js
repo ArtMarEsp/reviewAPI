@@ -18,64 +18,20 @@ router.get('/', checkAuto ,function(req, res){ //Here you get ALL the reviews th
 router.get('/last', checkAuto ,function(req, res){// Here you get the last 10 reviews that are stored in the data base, you must grant the Authorization token to access.
     Review.find(function(err, foundReview){ //ex. localhost:3000/reviews/last
         if(!err){
-            res.send(foundReview.slice(0,10));
+            res.send(foundReview.slice(-10));
         } else {
             res.send("Error!");
         }
     });
 });
 
-
-
-router.get("/rating/:value",function(req, res){ //Here you can see all the reviews filtered by rating, you ,ust gran the Authorization token.
+router.get("/rating/:value",function(req, res){ //Here you can see all the reviews filtered by rating, you must grant the Authorization token.
     const n = req.params.value; //ex. localhost:3000/reviews/rating/5
     Review.find({rate: req.params.value}, function(err, foundReviews){
-        if(n == 5){
-            if(foundReviews){
-                res.status(200).json({
-                    foundReviews
-                });
-            } else {
-                res.send("No reviews match the rating");
-            }
-        } 
-        if(n == 4){
-            if(foundReviews){
-                res.status(201).json({
-                    foundReviews
-                });
-            } else {
-                res.send("No reviews match the rating");
-            }
-        } 
-        if(n == 3){
-            if(foundReviews){
-                res.status(202).json({
-                    foundReviews
-                });
-            } else {
-                res.send("No reviews match the rating");
-            }
-        } 
-        if(n == 2){
-            if(foundReviews){
-                res.status(203).json({
-                    foundReviews
-                });
-            } else {
-                res.send("No reviews match the rating");
-            }
-        } 
-        if(n == 1){
-            if(foundReviews){
-                res.status(204).json({
-                    foundReviews
-                });
-            } else {
-                res.send("No reviews match the rating");
-            }
+        if(foundReviews){
+            res.send(foundReviews);
         } else {
-            res.send("Invalidad rating");
+            res.send("No reviews found with that rating");
         }
     });
 });
