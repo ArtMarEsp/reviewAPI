@@ -25,7 +25,7 @@ router.get('/last', checkAuto ,function(req, res){// Here you get the last 10 re
     });
 });
 
-router.get("/rating/:value",function(req, res){ //Here you can see all the reviews filtered by rating, you must grant the Authorization token.
+router.get("/rating/:value",function(req, res){ //Here you can see all the reviews filtered by rating, the Authorization token is not required.
     const n = req.params.value; //ex. localhost:3000/reviews/rating/5
     Review.find({rate: req.params.value}, function(err, foundReviews){
         if(foundReviews){
